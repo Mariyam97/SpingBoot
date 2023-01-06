@@ -1,0 +1,10 @@
+INSERT INTO library VALUES(1,'LEARN JAVA','A_Technology Library');
+INSERT INTO library VALUES(2,'LEARN Python','B_Technology Library');
+INSERT INTO library VALUES(3,'LEARN EARTH','C_Space Library');
+INSERT INTO library VALUES(4,'LEARN MARS','D_Space Library');
+INSERT INTO library VALUES(5,'LEARN Jupiter','E_Space Library');
+INSERT INTO library VALUES(6,'xyz,abc,efg','F_Space ');
+INSERT INTO library VALUES(7,'xyz,abc,efg','G_Tech ');
+INSERT INTO library VALUES(8,'xyz,abc,efg','H_Space ');
+INSERT INTO library VALUES(9,'xyz,abc,efg','Y_Space ');
+INSERT INTO library VALUES(10,'xyz,abc,efg','Z_Space ');
