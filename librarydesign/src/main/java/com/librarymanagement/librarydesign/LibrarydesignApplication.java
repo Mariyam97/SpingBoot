@@ -12,8 +12,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Sort.Direction;
 
 import com.librarymanagement.librarydesign.entity.Library;
-import com.librarymanagement.librarydesign.serviceImpl.LibraryCreateServiceImpl;
-import com.librarymanagement.librarydesign.serviceImpl.ReadServiceImpl;
+import com.librarymanagement.librarydesign.service.LibraryCountService;
+import com.librarymanagement.librarydesign.service.LibraryCreateService;
+import com.librarymanagement.librarydesign.service.LibraryDeleteService;
+import com.librarymanagement.librarydesign.service.LibraryExistService;
+import com.librarymanagement.librarydesign.service.ReadService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,10 +25,22 @@ import lombok.extern.slf4j.Slf4j;
 public class LibrarydesignApplication implements CommandLineRunner {
 
 	@Autowired
-	ReadServiceImpl readServiceImpl;
+	ReadService readServiceImpl;
 
 	@Autowired
-	LibraryCreateServiceImpl libraryCreateServiceImpl;
+	
+	LibraryCreateService libraryCreateServiceImpl;
+	
+	
+	@Autowired
+	LibraryCountService  libraryCountServiceImp;
+	
+	
+	@Autowired
+	LibraryExistService  libraryExistServiceImpl;
+	
+	@Autowired
+	LibraryDeleteService libraryDeleteServiceImpl;
 
 	public static void main(String[] args) {
 
@@ -35,16 +50,62 @@ public class LibrarydesignApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-		readServiceImplMethod();
+	
+	//	readServiceImplMethod();
 
+	//	libraryCreateServiceImpl();
+		
+	//	libraryCountServiceImp();
+		
+	//libraryExistServiceImpl();
+		
+	//	log.info("Delete one library  -> {} ",libraryDeleteServiceImpl.deleteSingleLibrary(Library.builder().id(11l).commaSeparatedBooknames("xyz,abc,efg").name("Z_Space").build()));
+		
+	//	log.info("Prune Library table -> {} ",libraryDeleteServiceImpl.pruneTable());
+		
+	/*	List<Library> libraries=new ArrayList<>();
+		libraries.add(Library.builder().id(3l).name("C_Space Library").commaSeparatedBooknames("").build());
+		libraries.add(Library.builder().id(4l).name("D_Space Library").commaSeparatedBooknames("").build());
+		libraries.add(Library.builder().id(5l).name("E_Space Library").commaSeparatedBooknames("").build());
+		
+		log.info("Delete all this Libraries ->{} ",libraryDeleteServiceImpl.deleteAllThese(libraries) );
+		*/
+		
+	//	log.info("Delete one library  -> {} ",libraryDeleteServiceImpl.deleteAllInBatch());
+	//	log.info("Delete  library by id  -> {} ",libraryDeleteServiceImpl.deleteLibraryById(7l));
+		
+		List<Library> libraries=new ArrayList<>();
+		libraries.add(Library.builder().id(3l).name("C_Space Library").commaSeparatedBooknames("").build());
+		libraries.add(Library.builder().id(4l).name("D_Space Library").commaSeparatedBooknames("").build());
+		libraries.add(Library.builder().id(5l).name("E_Space Library").commaSeparatedBooknames("").build());
+		
+		log.info("Delete all this Libraries in batch ->{} ",libraryDeleteServiceImpl.deleteAllTheseInBatch(libraries));
+		
+	}
+
+	private void libraryExistServiceImpl() {
+		log.info("Check if library exist by id  -> {} ", libraryExistServiceImpl.checkLibraryExistsById(1l));
+		log.info("Check if library exist by id  -> {} ", libraryExistServiceImpl.checkLibraryExistsById(16l));
+		
+		log.info("Check if library exist by example  -> {} ",libraryExistServiceImpl.checkLibraryExistsByExample("LEARN Python"));
+		log.info("Check if library exist by example  -> {} ",libraryExistServiceImpl.checkLibraryExistsByExample("LEARNPython"));
+	}
+
+	private void libraryCountServiceImp() {
+		log.info("Count the number of Libraries -> {} ",libraryCountServiceImp.countLibraries());
+		log.info("Count the number of Libraries with Zero Books -> {} ",libraryCountServiceImp.countLibrariesWithZeroBooks());
+	}
+
+	private void libraryCreateServiceImpl() {
 		log.info("Persist a single Library -> {} ", libraryCreateServiceImpl.addSingleLibrary(
 				Library.builder().id(11l).name("M_Library").commaSeparatedBooknames("MAC BOOK").build()));
-		List<Library>libraries = new ArrayList<Library>();
+		List<Library> libraries = new ArrayList<Library>();
 		libraries.add(Library.builder().id(12l).name("L_Library").commaSeparatedBooknames("APPLE BOOK").build());
 		libraries.add(Library.builder().id(13l).name("P_Library").commaSeparatedBooknames("LAPTOP BOOK").build());
 		log.info("Persist a single Library -> {} ", libraryCreateServiceImpl.addAllLibraries(libraries));
 
+		log.info("Persist a Library with save And Flush -> {} ", libraryCreateServiceImpl.addLibrarywithSavedAndFlush(
+				Library.builder().id(14l).name("P_Library").commaSeparatedBooknames("EYE BOOK").build()));
 	}
 
 	private void readServiceImplMethod() {
@@ -69,8 +130,8 @@ public class LibrarydesignApplication implements CommandLineRunner {
 				readServiceImpl.getLibrariesPagedAndSortedByName().get().collect(Collectors.toList()));
 		log.info("Fetch  libraries custom paged and default sorted by name ->{}",
 				readServiceImpl
-						.getLibrariesCustomPagedAndSortedWithDefaultOrderByNameAndWithTheseBooks("xyz,abc,efg", 1, 2)
-						.get().collect(Collectors.toList()));
+				.getLibrariesCustomPagedAndSortedWithDefaultOrderByNameAndWithTheseBooks("xyz,abc,efg", 1, 2)
+				.get().collect(Collectors.toList()));
 		log.info("Fetch  libraries Sorted by Names -> {} ",
 				readServiceImpl.getSortedByNameAndWithTheseBooks("xyz,abc,efg"));
 
